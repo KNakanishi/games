@@ -1,0 +1,10 @@
+
+#game_main {
+    padding: 20px;
+    margin: 0 auto;
+    width: 400px;
+}
+
+#world {
+    border: 1px solid #00ff00;
+}
