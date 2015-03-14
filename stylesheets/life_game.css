@@ -8,3 +8,9 @@
 #world {
     border: 1px solid #00ff00;
 }
+#menu {
+    margin: 0 auto;
+    padding-top: 10px;
+    
+    width: 400px;
+}
