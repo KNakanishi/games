@@ -6,19 +6,20 @@ var canvas;                     //= document.getElementById('world');
 var context;                    //= canvas.getContext('2d');
  
 window.onload = function() {
-    var field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
-    var tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
-    for (var i=0; i<field.length; i++) field[i] = Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
+    field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
+    tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
     canvas = document.getElementById('world'); // canvas要素を取得
-    // canvas.width = canvas.height = SCREEN_SIZE; // キャンバスのサイズを設定
-    // var scaleRate = Math.min(window.innerWidth/SCREEN_SIZE, window.innerHeight/SCREEN_SIZE); // Canvas引き伸ばし率の取得
-    // canvas.style.width = canvas.style.height = SCREEN_SIZE*scaleRate+'px';  // キャンバスを引き伸ばし
     context = canvas.getContext('2d');                // コンテキスト
     context.fillStyle = 'rgb(211, 85, 149)';          // 色
-    update(field, tempField);   // ゲームループ開始
+    newfied();
 }
- 
-function update(field, tempField) {
+
+function newfied() {
+    for (var i=0; i<field.length; i++) field[i] = Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
+    draw(field);
+}
+
+function update() {
     var n = 0;                    // 自身のまわりにある「生」の数
     tempField = field.slice(); // 複製
     for (var i=0; i<tempField.length; i++) {
@@ -41,8 +42,8 @@ function update(field, tempField) {
         } else field[i] = 0; // 「死」
     }
     draw(field);                                    // canvasを更新
-    setTimeout(update, 1000/FPS, field, tempField); // 再帰
 }
+
  
 function draw(field) {
     context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE); // 画面をクリア
@@ -51,4 +52,12 @@ function draw(field) {
         var y = Math.floor(i/SIDE_CELLS) * CELL_SIZE; // y座標
         if (field[i]) context.fillRect(x, y, CELL_SIZE, CELL_SIZE); // 「生」を描画
     }
+}
+
+function stert() {
+    timer = setInterval('update()',1000/FPS);
+}
+
+function stop() {
+    clearInterval(timer);
 }
