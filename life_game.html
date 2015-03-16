@@ -21,6 +21,16 @@
         <button id="init" class="button" onClick="newfied()">初期値配置</button>
         <button id="start" class="button" onClick="stert()">開始</button>
         <button id="stop" class="button" onClick="stop()">終了</button>
+
+        <p>画面セル数</p>
+        <select id="select_cells" onChange="select_cells(this)">
+          <option value="300">300×300</option>
+          <option value="200" selected>200×200</option>
+          <option value="100">100×100</option>
+          <option value="50">50×50</option>
+          <option value="10">10×10</option>
+        </select>
+        <p>自由入力；<input type="text" id="free_cells" onChange="free_cells(this)"></p>
       </div>
     </div>
   </body>

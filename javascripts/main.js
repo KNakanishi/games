@@ -43,7 +43,6 @@ function update() {
     }
     draw(field);                                    // canvasを更新
 }
-
  
 function draw(field) {
     context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE); // 画面をクリア
@@ -60,4 +59,20 @@ function stert() {
 
 function stop() {
     clearInterval(timer);
+}
+
+function select_cells(Obj) {
+  SIDE_CELLS = Obj.options[Obj.selectedIndex].value
+  CELL_SIZE = SCREEN_SIZE / SIDE_CELLS;
+  field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
+  tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
+  newfied()
+}
+
+function free_cells(Obj) {
+  SIDE_CELLS = Obj.value
+  CELL_SIZE = SCREEN_SIZE / SIDE_CELLS;
+  field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
+  tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
+  newfied()
 }
