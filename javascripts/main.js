@@ -10,7 +10,7 @@ window.onload = function() {
     tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
     canvas = document.getElementById('world'); // canvas要素を取得
     context = canvas.getContext('2d');                // コンテキスト
-    context.fillStyle = 'rgb(211, 85, 149)';          // 色
+    context.fillStyle = 'rgb(0, 255, 0)';          // 色
     newfied();
 }
 
