@@ -4,7 +4,7 @@ var CELL_SIZE = SCREEN_SIZE / SIDE_CELLS; // セルの幅
 var FPS = 10;                             // フレームレート
 var canvas;                     //= document.getElementById('world');
 var context;                    //= canvas.getContext('2d');
- 
+
 window.onload = function() {
     field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
     tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
@@ -12,6 +12,7 @@ window.onload = function() {
     context = canvas.getContext('2d');                // コンテキスト
     context.fillStyle = 'rgb(0, 255, 0)';          // 色
     newfied();
+    document.addEventListener('mousedown', test);
 }
 
 function newfied() {
@@ -83,4 +84,26 @@ function free_cells(Obj) {
   field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
   tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
   newfied()
+}
+
+function test(e) {
+  var rect = e.target.getBoundingClientRect();
+  var mx = e.clientX - rect.left - 1;
+  var my = e.clientY - rect.top - 4;
+  for (var i=0; i<field.length; i++) {
+    var x = (i%SIDE_CELLS) * CELL_SIZE;
+    var y = Math.floor(i/SIDE_CELLS) * CELL_SIZE;
+    if (mx >= x && mx < (x+CELL_SIZE)) {
+      if (my >= y && my < (y+CELL_SIZE)) {
+         if(field[i]) {
+           field[i] = 0;
+           context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
+         } else {
+           field[i] = 1;
+           context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+         }
+
+      }
+    }
+  }
 }
