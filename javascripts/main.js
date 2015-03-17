@@ -61,6 +61,14 @@ function stop() {
     clearInterval(timer);
 }
 
+function initialize() {
+  for (var i=0; i<field.length; i++) field[i] = 0;
+  // field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
+  // tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
+  draw(field);
+  // context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE);
+}
+
 function select_cells(Obj) {
   SIDE_CELLS = Obj.options[Obj.selectedIndex].value
   CELL_SIZE = SCREEN_SIZE / SIDE_CELLS;
