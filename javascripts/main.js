@@ -2,18 +2,23 @@ var SCREEN_SIZE = 400;                    // キャンバスの幅
 var SIDE_CELLS = 200;                     // 一辺のセルの数
 var CELL_SIZE = SCREEN_SIZE / SIDE_CELLS; // セルの幅
 var FPS = 10;                             // フレームレート
-var canvas;                     //= document.getElementById('world');
-var context;                    //= canvas.getContext('2d');
+var canvas;                               //= document.getElementById('world');
+var context;                              //= canvas.getContext('2d');
+var drawFlag = false;                     // マウスクリックフラグ
+var move_x = 0;                           // 変換セルx座標
+var move_y = 0;                           // 変換セルy座標
 
-window.onload = function() {
+$(function() {
     field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
     tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
     canvas = document.getElementById('world'); // canvas要素を取得
     context = canvas.getContext('2d');                // コンテキスト
     context.fillStyle = 'rgb(0, 255, 0)';          // 色
     newfied();
-    document.addEventListener('mousedown', test);
-}
+    document.addEventListener('mousedown', down);
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+});
 
 function newfied() {
     for (var i=0; i<field.length; i++) field[i] = Math.floor(Math.random()*2); // ランダムに「生」「死」を格納
@@ -86,23 +91,43 @@ function free_cells(Obj) {
   newfied()
 }
 
-function test(e) {
+function down(e) {
+  var rect = e.target.getBoundingClientRect();
+  var mx = e.clientX - rect.left - 1;
+  var my = e.clientY - rect.top - 4;
+  if (mx < 0 || mx > SCREEN_SIZE) return;
+  if (my < 0 || my > SCREEN_SIZE) return;
+  drawFlag = true;
+  move_x = 0;
+  move_y = 0;
+}
+
+function up() {
+  drawFlag = false;
+}
+
+function move(e) {
+  if (!drawFlag) return;
   var rect = e.target.getBoundingClientRect();
   var mx = e.clientX - rect.left - 1;
   var my = e.clientY - rect.top - 4;
   for (var i=0; i<field.length; i++) {
     var x = (i%SIDE_CELLS) * CELL_SIZE;
     var y = Math.floor(i/SIDE_CELLS) * CELL_SIZE;
-    if (mx >= x && mx < (x+CELL_SIZE)) {
-      if (my >= y && my < (y+CELL_SIZE)) {
-         if(field[i]) {
-           field[i] = 0;
-           context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
-         } else {
-           field[i] = 1;
-           context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-         }
+    if (move_x != x || move_y != y) {
+      if (mx >= x && mx < (x+CELL_SIZE)) {
+        if (my >= y && my < (y+CELL_SIZE)) {
 
+          if(field[i]) {
+            field[i] = 0;
+            context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
+          } else {
+            field[i] = 1;
+            context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+          }
+          move_x = x;
+          move_y = y;
+        }
       }
     }
   }
