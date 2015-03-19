@@ -101,6 +101,8 @@ function down(e) {
 
 function up() {
   drawFlag = false;
+  move_x = 0;
+  move_y = 0;
 }
 
 function move(e) {
@@ -112,28 +114,25 @@ function move(e) {
   for (var i=0; i<field.length; i++) {
     var x = (i%SIDE_CELLS) * CELL_SIZE;
     var y = Math.floor(i/SIDE_CELLS) * CELL_SIZE;
-    if (move_x != x || move_y != y) {
-      if (mx >= x && mx < (x+CELL_SIZE)) {
-        if (my >= y && my < (y+CELL_SIZE)) {
-          if (drawtype[0].checked) {
-            if (field[i]) {
-              field[i] = 0;
-              context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
-            } else {
-              field[i] = 1;
-              context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-            }
-          } else if (drawtype[1].checked) {
-            field[i] = 1;
-            context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-          } else if (drawtype[2].checked) {
-            field[i] = 0;
-            context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
-          }
-          move_x = x;
-          move_y = y;
-        }
+    if (move_x == x && move_y == y) continue;
+    if (mx < x || mx >= (x+CELL_SIZE)) continue;
+    if (my < y || my >= (y+CELL_SIZE)) continue;
+    if (drawtype[0].checked) {
+      if (field[i]) {
+        field[i] = 0;
+        context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
+      } else {
+        field[i] = 1;
+        context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
       }
+    } else if (drawtype[1].checked) {
+      field[i] = 1;
+      context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+    } else if (drawtype[2].checked) {
+      field[i] = 0;
+      context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
     }
+    move_x = x;
+    move_y = y;
   }
 }
