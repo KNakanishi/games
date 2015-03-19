@@ -69,10 +69,7 @@ function stop() {
 
 function initialize() {
   for (var i=0; i<field.length; i++) field[i] = 0;
-  // field = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報
-  // tempField = new Array(SIDE_CELLS*SIDE_CELLS); // フィールド情報の一時記憶用
   draw(field);
-  // context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE);
 }
 
 function select_cells(Obj) {
@@ -109,6 +106,7 @@ function up() {
 function move(e) {
   if (!drawFlag) return;
   var rect = e.target.getBoundingClientRect();
+  var drawtype = document.getElementsByName('drawtype');
   var mx = e.clientX - rect.left - 1;
   var my = e.clientY - rect.top - 4;
   for (var i=0; i<field.length; i++) {
@@ -117,13 +115,20 @@ function move(e) {
     if (move_x != x || move_y != y) {
       if (mx >= x && mx < (x+CELL_SIZE)) {
         if (my >= y && my < (y+CELL_SIZE)) {
-
-          if(field[i]) {
-            field[i] = 0;
-            context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
-          } else {
+          if (drawtype[0].checked) {
+            if (field[i]) {
+              field[i] = 0;
+              context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
+            } else {
+              field[i] = 1;
+              context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+            }
+          } else if (drawtype[1].checked) {
             field[i] = 1;
             context.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+          } else if (drawtype[2].checked) {
+            field[i] = 0;
+            context.clearRect(x, y, CELL_SIZE, CELL_SIZE);
           }
           move_x = x;
           move_y = y;
