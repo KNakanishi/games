@@ -1,11 +1,30 @@
+p {
+    margin: 10px 0 0 0;
+}
+
 #game_main {
     padding: 20px;
     margin: 0 auto;
     width: 400px;
 }
 
+#description {
+    margin: 0 auto;
+    width: 400px;
+}
+
+#description p#title {
+    text-align: center;
+    font-size: large;
+}
+
+#description p#d_text {
+    font-size: x-small;
+}
+
 #world {
     border: 1px solid #00ff00;
+    cursor: crosshair;
 }
 
 #menu {
@@ -13,6 +32,10 @@
     padding-top: 10px;
     
     width: 400px;
+}
+
+#cell_num p#free {
+    margin: 0 auto;
 }
 
 input[type="text"] {

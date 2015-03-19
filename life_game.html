@@ -13,30 +13,43 @@
   </head>
   <body>
     <div class="wrapper">
+      <div id="description">
+        <p id="title">ライフゲーム</p>
+        <p id="d_text">簡易なライフゲームです。<br/>
+        操作メニューから操作を行ってください<br/>
+        画面セル数では、画面上のセル上限を変更できます。※自由入力で大きい値を入力すると処理落ちする場合があります。<br/>
+        画面上をクリックする事で、各セルの状態を変更できます。変更の仕方は描画タイプから選択できます。</p>
+      </div>
       <div id="game_main">
         <canvas id="world" style="display:block;margin:auto;" width="400" height="400"></canvas>
       </div>
       <div id="menu">
-        <p>操作メニュー</p>
-        <button id="init" class="button" onClick="newfied()">初期値配置</button>
-        <button id="start" class="button" onClick="stert()">開始</button>
-        <button id="stop" class="button" onClick="stop()">終了</button>
-        <button id="clear" class="button" onClick="initialize()">クリア</button>
+        <div id="operation">
+          <p>操作メニュー</p>
+          <button id="init" class="button" onClick="newfied()">初期値配置</button>
+          <button id="start" class="button" onClick="stert()">開始</button>
+          <button id="stop" class="button" onClick="stop()">終了</button>
+          <button id="clear" class="button" onClick="initialize()">クリア</button>
+        </div>
 
-        <p>画面セル数</p>
-        <select id="select_cells" onChange="select_cells(this)">
-          <option value="300">300×300</option>
-          <option value="200" selected>200×200</option>
-          <option value="100">100×100</option>
-          <option value="50">50×50</option>
-          <option value="10">10×10</option>
-        </select>
-        <p>自由入力；<input type="text" id="free_cells" onChange="free_cells(this)"></p>
+        <div id="cell_num">
+          <p>画面セル数</p>
+          <select id="select_cells" onChange="select_cells(this)">
+            <option value="300">300×300</option>
+            <option value="200" selected>200×200</option>
+            <option value="100">100×100</option>
+            <option value="50">50×50</option>
+            <option value="10">10×10</option>
+          </select>
+          <p id="free">自由入力；<input type="text" id="free_cells" onChange="free_cells(this)"></p>
+        </div>
 
-        <p>描画タイプ</p>
-        <input type="radio" name="drawtype" value="reversal" checked>反転
-        <input type="radio" name="drawtype" value="brush">ブラシ
-        <input type="radio" name="drawtype" value="eraser">消しゴム
+        <div id="draw_type">
+          <p>描画タイプ</p>
+          <input type="radio" name="drawtype" value="reversal" checked>反転
+          <input type="radio" name="drawtype" value="brush">ブラシ
+          <input type="radio" name="drawtype" value="eraser">消しゴム
+        </div>
       </div>
     </div>
   </body>
