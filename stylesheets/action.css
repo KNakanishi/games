@@ -1,0 +1,28 @@
+p {
+    margin: 10px 0 0 0;
+}
+
+#description {
+    margin: 0 auto;
+    width: 400px;
+}
+
+#description p#title {
+    text-align: center;
+    font-size: large;
+}
+
+#description p#d_text {
+    font-size: x-small;
+}
+
+#game_main {
+    padding: 20px;
+    margin: 0 auto;
+    width: 400px;
+}
+
+#world {
+    border: 1px solid #00ff00;
+    cursor: crosshair;
+}
