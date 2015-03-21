@@ -1,17 +1,17 @@
-var SCREEN_SIZE = 400;                    // ƒLƒƒƒ“ƒoƒX‚Ì•
-var FPS = 200;                             // ƒtƒŒ[ƒ€ƒŒ[ƒg
+var SCREEN_SIZE = 400;                    // ã‚­ãƒ£ãƒ³ãƒã‚¹ã®å¹…
+var FPS = 200;                             // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ
 var canvas;                               //= document.getElementById('world');
 var context;                              //= canvas.getContext('2d');
 
-var GRAUND = SCREEN_SIZE - 10; // ’n–Ê
-// ©‹@‰ŠúˆÊ’u
+var GRAUND = SCREEN_SIZE - 10; // åœ°é¢
+// è‡ªæ©ŸåˆæœŸä½ç½®
 var x = 0;
 var y = GRAUND;
 
 $(function() {
-  canvas = document.getElementById('world'); // canvas—v‘f‚ğæ“¾
-  context = canvas.getContext('2d');                // ƒRƒ“ƒeƒLƒXƒg
-  context.fillStyle = "#00ff00";          // F
+  canvas = document.getElementById('world'); // canvasè¦ç´ ã‚’å–å¾—
+  context = canvas.getContext('2d');                // ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
+  context.fillStyle = "#00ff00";          // è‰²
   context.beginPath();
   window.addEventListener ('keydown' , keydownfunc , true);
   timer = setInterval('loop()',1000/FPS);
