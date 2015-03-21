@@ -1,17 +1,20 @@
 var SCREEN_SIZE = 400;                    // キャンバスの幅
-var FPS = 10;                             // フレームレート
+var FPS = 200;                             // フレームレート
 var canvas;                               //= document.getElementById('world');
 var context;                              //= canvas.getContext('2d');
+
+var GRAUND = SCREEN_SIZE - 10; // 地面
+// 自機初期位置
 var x = 0;
-var y = SCREEN_SIZE;
+var y = GRAUND;
 
 $(function() {
   canvas = document.getElementById('world'); // canvas要素を取得
   context = canvas.getContext('2d');                // コンテキスト
-  context.fillStyle = 'rgb(0, 255, 0)';          // 色
+  context.fillStyle = "#00ff00";          // 色
   context.beginPath();
   window.addEventListener ('keydown' , keydownfunc , true);
-  timer = setInterval('hero()',1000/FPS);
+  timer = setInterval('loop()',1000/FPS);
 });
 
 function keydownfunc (event) {
@@ -39,19 +42,31 @@ function keydownfunc (event) {
     }
     break;
   case 40:
-    if (y<SCREEN_SIZE) {
+    if (y<GRAUND) {
       y += 5;
     } else {
-      y = SCREEN_SIZE;
+      y = GRAUND;
     }
     break;
   }
 }
 
+function loop() {
+  context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE);
+  stage();
+  hero();
+}
+
 function hero() {
-    context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE);
-    context.fillRect(x, y-10, 10, 10);
-    console.log(x);
-    console.log(SCREEN_SIZE);
-    console.log(y);
+  context.fillRect(x, y-10, 10, 10);
+}
+
+function stage() {
+  context.strokeStyle = "#00ff00";
+  context.beginPath();
+  context.moveTo(0, GRAUND);
+  context.lineTo(SCREEN_SIZE, GRAUND);
+  context.closePath();
+  context.stroke();
+
 }
