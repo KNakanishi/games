@@ -4,6 +4,10 @@ var canvas;                               //= document.getElementById('world');
 var context;                              //= canvas.getContext('2d');
 
 var GRAUND = SCREEN_SIZE - 10; // 地面
+var G = 9.8;
+var t = 0;
+var v = 0;
+var V = 30; // ジャンプ時の初期加速度
 // 自機初期位置
 var x = 0;
 var y = GRAUND;
@@ -20,44 +24,39 @@ $(function() {
 function keydownfunc (event) {
   var code = event.keyCode;
   switch (code) {
-  case 37:
+  case 37: // ←
     if (x>0) {
       x -= 5;
     } else {
       x = 0;
     }
     break;
-  case 38:
-    if (y>0) {
-      y -= 5;
-    } else {
-      y = 0;
-    }
+  case 38: // ↑
+    v = V
+    t = 0;
     break;
-  case 39:
+  case 39: // →
     if (x<SCREEN_SIZE) {
       x += 5;
     } else {
       x = SCREEN_SIZE;
     }
     break;
-  case 40:
-    if (y<GRAUND) {
-      y += 5;
-    } else {
-      y = GRAUND;
-    }
+  case 40: // ↓
     break;
   }
 }
 
 function loop() {
+  t += 0.1;
   context.clearRect(0, 0, SCREEN_SIZE, SCREEN_SIZE);
   stage();
   hero();
 }
 
 function hero() {
+  var hy = GRAUND - ((v*t) - ((G*t*t)/2));
+  if (hy < GRAUND) y = hy;
   context.fillRect(x, y-10, 10, 10);
 }
 
