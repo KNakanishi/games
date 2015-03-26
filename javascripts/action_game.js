@@ -7,6 +7,7 @@ window.onload = function() {
   game.preload('images/enchant_img/start.png',
                'images/enchant_img/gameover.png',
                'images/enchant_img/chara1.png',
+               'images/enchant_img/chara2.png',
                'images/enchant_img/avatarBg1.png',
                'images/enchant_img/avatarBg2.png',
                'images/enchant_img/avatarBg3.png',
@@ -49,9 +50,24 @@ window.onload = function() {
       var kuma = new Sprite(32, 32);
       kuma.image = game.assets['images/enchant_img/chara1.png'];
       kuma.x = 80;
-      kuma.y = GROUND_LINE;
+      kuma.y = GROUND_LINE - kuma.height;
       scene.addChild(kuma);
       var preY = kuma.y;
+
+      var monster_buta = new Sprite(32, 32);
+      monster_buta.image = game.assets['images/enchant_img/chara2.png'];
+      monster_buta.x = 350;
+      monster_buta.y = GROUND_LINE - monster_buta.height;
+      scene.addChild(monster_buta);
+
+      var monster_sirokuma = new Sprite(32, 32);
+      monster_sirokuma.image = game.assets['images/enchant_img/chara1.png'];
+      monster_sirokuma.frame = 5;
+      monster_sirokuma.scaleX = -1;
+      monster_sirokuma.x = 300;
+      monster_sirokuma.y = GROUND_LINE - monster_sirokuma.height;
+      scene.addChild(monster_sirokuma);
+
 
       var count = 1;
       scene.addEventListener(Event.ENTER_FRAME, function(){
@@ -59,6 +75,7 @@ window.onload = function() {
         var forcey = 1.0;
 
         if (game.input.left) {
+          kuma.scaleX = -1;
           if (count > 0) {
             if (kuma.x > LEFT_END) {
               kuma.x -= SPEED;
@@ -73,6 +90,7 @@ window.onload = function() {
           if (kuma.frame < 0) kuma.frame = 2;
         }
         if (game.input.right) {
+          kuma.scaleX = 1;
           if (kuma.x < RIGTH_END) {
             kuma.x += SPEED;
           } else {
@@ -89,11 +107,20 @@ window.onload = function() {
           jump = true;
         }
         kuma.y += (kuma.y - preY) + forcey;
-        if(kuma.y > GROUND_LINE) {
-          kuma.y = GROUND_LINE;
+        if(kuma.y > GROUND_LINE - kuma.height) {
+          kuma.y = GROUND_LINE - kuma.height;
           jump = false;
         }
         preY = tempy;
+
+        // 敵の処理
+        monster_buta.x -= 2;
+        if (monster_buta.x%4 == 0) monster_buta.frame++;
+        monster_sirokuma.x -= 2;
+        if (monster_sirokuma.x%4 == 0) {
+          monster_sirokuma.frame++;
+          if (monster_sirokuma.frame > 7) monster_sirokuma.frame =5;
+        }
       });
       return scene;
     };
