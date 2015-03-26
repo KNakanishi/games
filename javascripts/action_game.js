@@ -33,6 +33,8 @@ window.onload = function() {
   
     var createGameScene = function() {
       var GROUND_LINE = 190;
+      var LEFT_END = 20;
+      var RIGTH_END = 270;
       var SPEED = 4;
       var jump = false;
   
@@ -51,17 +53,32 @@ window.onload = function() {
       scene.addChild(kuma);
       var preY = kuma.y;
 
+      var count = 1;
       scene.addEventListener(Event.ENTER_FRAME, function(){
         var tempy = kuma.y;
         var forcey = 1.0;
 
         if (game.input.left) {
-          kuma.x -= SPEED;
+          if (count > 0) {
+            if (kuma.x > LEFT_END) {
+              kuma.x -= SPEED;
+            } else {
+              bg.scroll(count);
+              count -= SPEED;
+            }
+          } else {
+            if (kuma.x > 0) kuma.x -= SPEED;
+          }
           kuma.frame--;
           if (kuma.frame < 0) kuma.frame = 2;
         }
         if (game.input.right) {
-          kuma.x += SPEED;
+          if (kuma.x < RIGTH_END) {
+            kuma.x += SPEED;
+          } else {
+            bg.scroll(count);
+            count += SPEED;
+          }
           kuma.frame++;
           if (kuma.frame > 2) kuma.frame = 0;
         }
