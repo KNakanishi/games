@@ -113,6 +113,12 @@ window.onload = function() {
         }
         preY = tempy;
 
+        // 衝突判定
+        if(kuma.intersect(monster_sirokuma)) {
+          kuma.frame = 3;
+          game.pushScene(createGameoverScene(scroll));
+        }
+
         // 敵の処理
         monster_buta.x -= 2;
         if (monster_buta.x%4 == 0) monster_buta.frame++;
@@ -123,6 +129,22 @@ window.onload = function() {
         }
       });
       return scene;
+    };
+
+    
+    var createGameoverScene = function(scroll) {
+
+        var scene = new Scene();                                   // 新しいシーンを作る
+        scene.backgroundColor = 'rgba(0, 0, 0, 0.5)';              // シーンの背景色を設定
+
+        // ゲームオーバー画像を設定
+        var gameoverImage = new Sprite(189, 97);                   // スプライトを作る
+        gameoverImage.image = game.assets['images/enchant_img/gameover.png'];  // 画像を設定
+        gameoverImage.x = 66;                                      // 横位置調整
+        gameoverImage.y = 170;                                     // 縦位置調整
+        scene.addChild(gameoverImage);                             // シーンに追加
+
+        return scene;
     };
 
     game.replaceScene(createStartScene());
