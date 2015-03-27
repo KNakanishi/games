@@ -58,6 +58,7 @@ window.onload = function() {
       monster_buta.image = game.assets['images/enchant_img/chara2.png'];
       monster_buta.x = 350;
       monster_buta.y = GROUND_LINE - monster_buta.height;
+      monster_buta.visible = true;
       scene.addChild(monster_buta);
 
       var monster_sirokuma = new Sprite(32, 32);
@@ -66,6 +67,7 @@ window.onload = function() {
       monster_sirokuma.scaleX = -1;
       monster_sirokuma.x = 300;
       monster_sirokuma.y = GROUND_LINE - monster_sirokuma.height;
+      monster_sirokuma.visible = true;
       scene.addChild(monster_sirokuma);
 
 
@@ -114,18 +116,38 @@ window.onload = function() {
         preY = tempy;
 
         // 衝突判定
+        var kuma_center = kuma.x + 16;
         if(kuma.intersect(monster_sirokuma)) {
-          kuma.frame = 3;
-          game.pushScene(createGameoverScene(scroll));
+          if(kuma_center > monster_sirokuma.x && kuma_center < monster_sirokuma.x + monster_sirokuma.width ) {
+            monster_sirokuma.frame = 8;
+            // Todo:消えるまでに若干時間を持たせたい
+            monster_sirokuma.visible = false;
+          } else if(monster_sirokuma.frame != 8) {
+            kuma.frame = 3;
+            game.pushScene(createGameoverScene(scroll));
+          }
         }
+        if(kuma.intersect(monster_buta)) {
+          if(kuma_center > monster_buta.x && kuma_center < monster_buta.x + monster_buta.width ) {
+            monster_buta.visible = false;
+          } else if(monster_buta.visible == true) {
+            kuma.frame = 3;
+            game.pushScene(createGameoverScene(scroll));
+          }
+        }
+        
 
         // 敵の処理
-        monster_buta.x -= 2;
-        if (monster_buta.x%4 == 0) monster_buta.frame++;
-        monster_sirokuma.x -= 2;
-        if (monster_sirokuma.x%4 == 0) {
-          monster_sirokuma.frame++;
-          if (monster_sirokuma.frame > 7) monster_sirokuma.frame =5;
+        if (monster_buta.visible == true) {
+          monster_buta.x -= 2;
+          if (monster_buta.x%4 == 0) monster_buta.frame++;
+        }
+        if (monster_sirokuma.frame != 8) {
+          monster_sirokuma.x -= 2;
+          if (monster_sirokuma.x%4 == 0) {
+            monster_sirokuma.frame++;
+            if (monster_sirokuma.frame > 7) monster_sirokuma.frame =5;
+          }
         }
       });
       return scene;
@@ -141,7 +163,7 @@ window.onload = function() {
         var gameoverImage = new Sprite(189, 97);                   // スプライトを作る
         gameoverImage.image = game.assets['images/enchant_img/gameover.png'];  // 画像を設定
         gameoverImage.x = 66;                                      // 横位置調整
-        gameoverImage.y = 170;                                     // 縦位置調整
+        gameoverImage.y = 100;                                     // 縦位置調整
         scene.addChild(gameoverImage);                             // シーンに追加
 
         return scene;
