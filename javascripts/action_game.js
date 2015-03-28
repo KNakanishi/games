@@ -35,7 +35,7 @@ window.onload = function() {
     var createGameScene = function() {
       var GROUND_LINE = 190;
       var LEFT_END = 20;
-      var RIGTH_END = 270;
+      var RIGTH_END = 170;
       var SPEED = 4;
       var jump = false;
   
