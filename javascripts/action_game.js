@@ -6,6 +6,7 @@ window.onload = function() {
   game.fps = 20; // FPS設定
   game.preload('images/enchant_img/start.png',
                'images/enchant_img/gameover.png',
+               'images/enchant_img/clear.png',
                'images/enchant_img/chara1.png',
                'images/enchant_img/chara2.png',
                'images/enchant_img/avatarBg1.png',
@@ -92,11 +93,16 @@ window.onload = function() {
         [  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
       ];
 
-      var grand =new Map(16, 16);
+      var grand = new Map(16, 16);
       grand.image = game.assets['images/enchant_img/map2.png'];
       grand.loadData(blocks);
-      
+
+      var gool = new Sprite(1, 320);
+      gool.x = 624;
+      gool.y = 0;
+
       var stage = new Group();
+      stage.addChild(gool);
       stage.addChild(grand);
       scene.addChild(stage);
       
@@ -113,7 +119,7 @@ window.onload = function() {
             } else {
               bg.scroll(count);
               count -= SPEED;
-              stage.x -= SPEED;
+              stage.x += SPEED;
             }
           } else {
             if (kuma.x > 0) kuma.x -= SPEED;
@@ -166,7 +172,9 @@ window.onload = function() {
             game.pushScene(createGameoverScene(scroll));
           }
         }
-        
+        if(kuma.intersect(gool)) {
+          game.pushScene(createGameclearScene(scroll));
+        }
 
         // 敵の処理
         if (monster_buta.visible == true) {
@@ -194,6 +202,21 @@ window.onload = function() {
         var gameoverImage = new Sprite(189, 97);                   // スプライトを作る
         gameoverImage.image = game.assets['images/enchant_img/gameover.png'];  // 画像を設定
         gameoverImage.x = 66;                                      // 横位置調整
+        gameoverImage.y = 100;                                     // 縦位置調整
+        scene.addChild(gameoverImage);                             // シーンに追加
+
+        return scene;
+    };
+
+    var createGameclearScene = function(scroll) {
+
+        var scene = new Scene();                                   // 新しいシーンを作る
+        scene.backgroundColor = 'rgba(0, 0, 0, 0.5)';              // シーンの背景色を設定
+
+        // ゲームクリア画像を設定
+        var gameoverImage = new Sprite(267, 48);                   // スプライトを作る
+        gameoverImage.image = game.assets['images/enchant_img/clear.png'];  // 画像を設定
+        gameoverImage.x = 26;                                      // 横位置調整
         gameoverImage.y = 100;                                     // 縦位置調整
         scene.addChild(gameoverImage);                             // シーンに追加
 
