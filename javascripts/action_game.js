@@ -120,6 +120,8 @@ window.onload = function() {
               bg.scroll(count);
               count -= SPEED;
               stage.x += SPEED;
+              monster_buta.x += SPEED;
+              monster_sirokuma.x += SPEED;
             }
           } else {
             if (kuma.x > 0) kuma.x -= SPEED;
@@ -135,6 +137,8 @@ window.onload = function() {
             bg.scroll(count);
             count += SPEED;
             stage.x -= SPEED;
+            monster_buta.x -= SPEED;
+            monster_sirokuma.x -= SPEED;
           }
           kuma.frame++;
           if (kuma.frame > 2) kuma.frame = 0;
