@@ -14,6 +14,7 @@ window.onload = function() {
                'images/enchant_img/avatarBg3.png',
                'images/enchant_img/map2.png'); // ゲームに使う素材を予め読み込み
   var IMAGE_PATH = "images/enchant_img/"
+  var LIMIT_TIME = 300;
 
   game.onload = function() { // ゲームメイン処理
     var createStartScene = function() {
@@ -106,7 +107,16 @@ window.onload = function() {
       stage.addChild(grand);
       scene.addChild(stage);
       
+      // タイム
+      var time_label = new Label();
+      time_label.x = 230;
+      time_label.y = 20;
+      time_label.text = "Time : " + LIMIT_TIME;
+      time_label.color = '#fcc800';
+      scene.addChild(time_label);
+
       var count = 1;
+      game.frame = 0;
       scene.addEventListener(Event.ENTER_FRAME, function(){
         var tempy = kuma.y;
         var forcey = 1.0;
@@ -192,6 +202,11 @@ window.onload = function() {
             if (monster_sirokuma.frame > 7) monster_sirokuma.frame =5;
           }
         }
+
+        // 時間更新
+        var time = LIMIT_TIME - Math.floor( game.frame/game.fps );
+        if (time <= 0) game.pushScene(createGameorverScene(scroll));
+        time_label.text = "Time : " + time;
       });
       return scene;
     };
