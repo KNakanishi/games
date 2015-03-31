@@ -14,7 +14,7 @@ window.onload = function() {
                'images/enchant_img/avatarBg3.png',
                'images/enchant_img/map2.png'); // ゲームに使う素材を予め読み込み
   var IMAGE_PATH = "images/enchant_img/"
-  var LIMIT_TIME = 300;
+  var LIMIT_TIME = 100; // 制限時間
 
   game.onload = function() { // ゲームメイン処理
     var createStartScene = function() {
@@ -205,8 +205,8 @@ window.onload = function() {
 
         // 時間更新
         var time = LIMIT_TIME - Math.floor( game.frame/game.fps );
-        if (time <= 0) game.pushScene(createGameorverScene(scroll));
         time_label.text = "Time : " + time;
+        if (time <= 0) game.pushScene(createGameoverScene(scroll));
       });
       return scene;
     };
