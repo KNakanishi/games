@@ -172,10 +172,12 @@ window.onload = function() {
         var kuma_center = kuma.x + 16;
         if(kuma.intersect(monster_sirokuma)) {
           if(kuma_center > monster_sirokuma.x && kuma_center < monster_sirokuma.x + monster_sirokuma.width ) {
-            monster_sirokuma.frame = 8;
-            score += 5;
-            // Todo:消えるまでに若干時間を持たせたい
-            monster_sirokuma.visible = false;
+            if(monster_sirokuma.frame != 8) {
+              monster_sirokuma.frame = 8;
+              score += 5;
+              // Todo:消えるまでに若干時間を持たせたい
+              monster_sirokuma.visible = false;
+            }
           } else if(monster_sirokuma.frame != 8) {
             kuma.frame = 3;
             game.pushScene(createGameoverScene());
@@ -183,8 +185,10 @@ window.onload = function() {
         }
         if(kuma.intersect(monster_buta)) {
           if(kuma_center > monster_buta.x && kuma_center < monster_buta.x + monster_buta.width ) {
-            monster_buta.visible = false;
-            score += 5;
+            if(monster_buta.visible == true) {
+              monster_buta.visible = false;
+              score += 5;
+            }
           } else if(monster_buta.visible == true) {
             kuma.frame = 3;
             game.pushScene(createGameoverScene());
