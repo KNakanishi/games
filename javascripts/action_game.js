@@ -117,6 +117,8 @@ window.onload = function() {
 
       var count = 1;
       game.frame = 0;
+      var time = 0; // 残り時間
+      var score = 0; // スコア
       scene.addEventListener(Event.ENTER_FRAME, function(){
         var tempy = kuma.y;
         var forcey = 1.0;
@@ -171,23 +173,26 @@ window.onload = function() {
         if(kuma.intersect(monster_sirokuma)) {
           if(kuma_center > monster_sirokuma.x && kuma_center < monster_sirokuma.x + monster_sirokuma.width ) {
             monster_sirokuma.frame = 8;
+            score += 5;
             // Todo:消えるまでに若干時間を持たせたい
             monster_sirokuma.visible = false;
           } else if(monster_sirokuma.frame != 8) {
             kuma.frame = 3;
-            game.pushScene(createGameoverScene(scroll));
+            game.pushScene(createGameoverScene());
           }
         }
         if(kuma.intersect(monster_buta)) {
           if(kuma_center > monster_buta.x && kuma_center < monster_buta.x + monster_buta.width ) {
             monster_buta.visible = false;
+            score += 5;
           } else if(monster_buta.visible == true) {
             kuma.frame = 3;
-            game.pushScene(createGameoverScene(scroll));
+            game.pushScene(createGameoverScene());
           }
         }
         if(kuma.intersect(gool)) {
-          game.pushScene(createGameclearScene(scroll));
+          score += time;
+          game.pushScene(createGameclearScene(score));
         }
 
         // 敵の処理
@@ -204,15 +209,15 @@ window.onload = function() {
         }
 
         // 時間更新
-        var time = LIMIT_TIME - Math.floor( game.frame/game.fps );
+        time = LIMIT_TIME - Math.floor( game.frame/game.fps );
         time_label.text = "Time : " + time;
-        if (time <= 0) game.pushScene(createGameoverScene(scroll));
+        if (time <= 0) game.pushScene(createGameoverScene());
       });
       return scene;
     };
 
     
-    var createGameoverScene = function(scroll) {
+    var createGameoverScene = function() {
 
         var scene = new Scene();                                   // 新しいシーンを作る
         scene.backgroundColor = 'rgba(0, 0, 0, 0.5)';              // シーンの背景色を設定
@@ -227,17 +232,27 @@ window.onload = function() {
         return scene;
     };
 
-    var createGameclearScene = function(scroll) {
+    var createGameclearScene = function(score) {
 
         var scene = new Scene();                                   // 新しいシーンを作る
         scene.backgroundColor = 'rgba(0, 0, 0, 0.5)';              // シーンの背景色を設定
 
         // ゲームクリア画像を設定
-        var gameoverImage = new Sprite(267, 48);                   // スプライトを作る
-        gameoverImage.image = game.assets['images/enchant_img/clear.png'];  // 画像を設定
-        gameoverImage.x = 26;                                      // 横位置調整
-        gameoverImage.y = 100;                                     // 縦位置調整
-        scene.addChild(gameoverImage);                             // シーンに追加
+        var gameclearImage = new Sprite(267, 48);                   // スプライトを作る
+        gameclearImage.image = game.assets['images/enchant_img/clear.png'];  // 画像を設定
+        gameclearImage.x = 26;                                      // 横位置調整
+        gameclearImage.y = 100;                                     // 縦位置調整
+        scene.addChild(gameclearImage);                             // シーンに追加
+
+        // スコア表示
+        var scoreLabel = new Label();
+        scoreLabel.width = 320;
+        scoreLabel.textAlign = 'center';
+        scoreLabel.x = 0;
+        scoreLabel.y = 180;
+        scoreLabel.text = "Score : " + score.toString();
+        scoreLabel.color = '#fcc800';
+        scene.addChild(scoreLabel);
 
         return scene;
     };
