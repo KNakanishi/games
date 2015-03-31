@@ -229,6 +229,21 @@ window.onload = function() {
         gameoverImage.y = 100;                                     // 縦位置調整
         scene.addChild(gameoverImage);                             // シーンに追加
 
+        // リスタートボタン設定
+        var buttonRetry = new Label();
+        buttonRetry.width = 320;
+        buttonRetry.textAlign = 'center';
+        buttonRetry.x = 0;
+        buttonRetry.y = 230;
+        buttonRetry.text = "リスタート";
+        buttonRetry.color = '#ffffff';
+        scene.addChild(buttonRetry);
+
+        buttonRetry.addEventListener(Event.TOUCH_END, function(){
+          game.popScene();
+          game.replaceScene(createStartScene());
+        });
+
         return scene;
     };
 
@@ -253,6 +268,21 @@ window.onload = function() {
         scoreLabel.text = "Score : " + score.toString();
         scoreLabel.color = '#fcc800';
         scene.addChild(scoreLabel);
+
+        // リスタートボタン設定
+        var buttonRetry = new Label();
+        buttonRetry.width = 320;
+        buttonRetry.textAlign = 'center';
+        buttonRetry.x = 0;
+        buttonRetry.y = 230;
+        buttonRetry.text = "リスタート";
+        buttonRetry.color = '#ffffff';
+        scene.addChild(buttonRetry);
+
+        buttonRetry.addEventListener(Event.TOUCH_END, function(){
+          game.popScene();
+          game.replaceScene(createStartScene());
+        });
 
         return scene;
     };
